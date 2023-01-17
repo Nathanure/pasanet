@@ -1,0 +1,12 @@
+// Import third-party module
+const express = require('express');
+const router = express.Router();
+// Import local module
+const log = require('../controllers/logController')
+
+// Router to render and switch directories in URL
+// Login route
+router.route('/')
+    .get(log)
+
+module.exports = router

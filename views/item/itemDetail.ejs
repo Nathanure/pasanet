@@ -1,0 +1,27 @@
+<%- contentFor('content') %>
+<!-- Item detail section-->
+<main class="py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5 align-items-center">
+            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0 image-item-detail" src="img/products/<%= item.image_path %>" alt="<%= item.image_name %>" /></div>
+            <div class="col-md-6">
+                <h1 id="name" class="display-5 fw-bolder"><%= item.name %></h1>
+                <div class="fs-5 mb-5">
+                    <span id="price"><%= item.price %></span>
+                </div>
+                <p class="lead">Hmm.. nice <%= item.name %></p>
+                <div class="d-flex justify-content-between">
+                    <div class="btn-group" role="group" aria-label="Input increment and decrement">
+                        <button class="col-7 btn btn-outline-danger minus-btn" type="button">-</button>
+                        <input class="col-7 btn form-control text-center" type="text" id="item" value="0" disabled>
+                        <button class="col-7 btn btn-outline-success plus-btn" type="button">+</button>
+                    </div>
+                    <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                        <i class="bi-cart-fill me-1"></i>
+                        Add to cart
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

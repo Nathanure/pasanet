@@ -1,0 +1,138 @@
+<%- contentFor('content') %>
+<main>
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">Dashboard</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="text-capitalize breadcrumb-item">
+                <a class="text-decoration-none" href="/"><%= superadmin.role || admin.role %> Dashboard</a>
+            </li>
+            <li class="text-capitalize breadcrumb-item active">Account list</li>
+        </ol>
+        <% const head = ['No.', 'Username', 'Email', 'Created on']%>
+        <!-- Display for Admin -->
+        <% if (admin !== undefined && superadmin.length === 0) { %>
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-table me-1"></i>
+                User list
+            </div>
+            <div class="card-body">
+                <table
+                    class="table table-hover table-bordered <%= user.length < 1 ? 'm-0' : '' %>"
+                    id="dataUser"
+                >
+                    <thead>
+                        <tr>
+                            <% head.forEach(column => { %>
+                            <th><%= column %></th>
+                            <% }) %>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% user.forEach((row, i) => { %>
+                        <tr role="button" onclick="window.location='<%= row.username %>';">
+                            <th><%= i+1 %>.</th>
+                            <td><%= row.username %></td>
+                            <td><%= row.email %></td>
+                            <td><%= row.created_at %></td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Display for Superadmin -->
+        <% } else if (superadmin !== undefined && admin.length === 0) { %>
+        <div class="accordion" id="accordionDashboard">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="firstHeader">
+                    <button
+                        class="accordion-button"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#firstCollapse"
+                        aria-expanded="true"
+                        aria-controls="firstCollapse"
+                    >
+                        Admin list
+                    </button>
+                </h2>
+                <div
+                    id="firstCollapse"
+                    class="accordion-collapse collapse show"
+                    aria-labelledby="firstHeader"
+                >
+                    <div class="accordion-body">
+                        <table
+                            class="table table-hover table-bordered <%= adminAcc.length < 1 ? 'm-0' : '' %>"
+                            id="dataAdmin"
+                        >
+                            <thead>
+                                <tr>
+                                    <% head.forEach(column => { %>
+                                    <th><%= column %></th>
+                                    <% }) %>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% adminAcc.forEach((row, i) => { %>
+                                <tr role="button" onclick="window.location='<%= row.username %>';">
+                                    <th><%= i+1 %>.</th>
+                                    <td><%= row.username %></td>
+                                    <td><%= row.email %></td>
+                                    <td><%= row.created_at %></td>
+                                </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="secondHeader">
+                    <button
+                        class="accordion-button collapsed"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#secondCollapse"
+                        aria-expanded="false"
+                        aria-controls="secondCollapse"
+                    >
+                        User list
+                    </button>
+                </h2>
+                <div
+                    id="secondCollapse"
+                    class="accordion-collapse collapse"
+                    aria-labelledby="secondHeader"
+                >
+                    <div class="accordion-body">
+                        <table
+                            class="table table-hover table-bordered <%= user.length < 1 ? 'm-0' : '' %>"
+                            id="dataUser"
+                        >
+                            <thead>
+                                <tr>
+                                    <% head.forEach(column => { %>
+                                    <th><%= column %></th>
+                                    <% }) %>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% user.forEach((row, i) => { %>
+                                <tr role="button" onclick="window.location='<%= row.username %>';">
+                                    <th><%= i+1 %>.</th>
+                                    <td><%= row.username %></td>
+                                    <td><%= row.email %></td>
+                                    <td><%= row.created_at %></td>
+                                </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% } %>
+    </div>
+</main>

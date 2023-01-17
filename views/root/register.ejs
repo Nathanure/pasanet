@@ -1,0 +1,112 @@
+<%- contentFor('content') %>  
+<!-- Register -->
+<main>
+    <!-- Display page flexible -->
+    <div class="d-flex justify-content-center vh-100 bg-credential">
+        <!-- Center display -->
+        <div class="m-auto">
+            <!-- Card to contain it -->
+            <div class="card shadow-lg">
+                <h1 class="text-center mb-3 mt-5">Register
+                    <!-- Return to main page -->
+                    <button type="button" class="btn-close position-absolute fs-5" style="left: 90%; bottom: 92%;" aria-label="Close" onclick="window.location='/'"></button>
+                </h1>
+                <!-- Form update -->
+                <form class="p-3" action="/register" method="post">
+                    <!-- Input form -->
+                    <div style="min-width: 30vw; max-width: 30vw;">
+                        <!-- Input name with validation -->
+                        <div class="mb-3">
+                            <label for="username" class="col-form-label">Username <i class="bi bi-info-circle opacity-75" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Enter a valid username. Example: (abcde)" style="font-size: 13px;"></i></label>
+                            <input type="text" class="form-control
+                            <% if(err != 'undefined') { %>
+                                <% err.forEach((error) => { %>
+                                    <%= error.param === "username" ? 'is-invalid' : '' %>
+                                <% }) %>
+                            <% } %>
+                            " 
+                            id="username" name="username" placeholder="New Username" />
+                            <% if(err != 'undefined') { %>
+                                <% err.forEach((error) => { %>
+                                <div id="validationUsernameServer" class="invalid-feedback"> 
+                                    <%= error.param === "username" ? error.msg : '' %>
+                                </div>
+                                <% }) %>
+                            <% } %>
+                        </div>
+                        <!-- Input email with validation -->
+                        <div class="mb-3">
+                            <label for="email" class="col-form-label">Email <i class="bi bi-info-circle opacity-75" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Enter a valid email. Example: (abcde@domain.com)" style="font-size: 13px;"></i></label>
+                            <input type="email" class="form-control
+                            <% if(err != 'undefined') { %>
+                                <% err.forEach((error) => { %>
+                                    <%= error.param === "email" ? 'is-invalid' : '' %>
+                                <% }) %>
+                            <% } %>
+                            " 
+                            id="email" name="email" placeholder="Active Email" />
+                            <% if(err != 'undefined') { %>
+                                <% err.forEach((error) => { %>
+                                <div id="validationEmailServer" class="invalid-feedback">
+                                    <%= error.param === "email" ? error.msg : '' %>
+                                </div>
+                                <% }) %>
+                            <% } %>
+                        </div>
+                        <!-- Input password with validation -->
+                        <div id="show_hide_password" class="mb-3">
+                            <label for="password" class="col-form-label">Password <i class="bi bi-info-circle opacity-75" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Enter password with combination of at least a lower case, upper case, number, and special character with more than 8 characters. Example: (Abcde12!)" style="font-size: 13px;"></i></label>
+                            <button type="button" class="pass-mask">
+                                <i class="bi bi-eye-slash-fill opacity-50" aria-hidden="true"></i>
+                            </button>
+                            <input type="password" class="form-control
+                            <% if(err != 'undefined') { %>
+                                <% err.forEach((error) => { %>
+                                    <%= error.param === "password" ? 'is-invalid' : '' %>
+                                <% }) %>
+                            <% } %>
+                            "
+                            name="password" id="password" placeholder="Strong Password" />
+                            <% if(err != 'undefined') { %>
+                                <% err.forEach((error) => { %>
+                                <div id="validationPasswordServer" class="invalid-feedback">
+                                    <%= error.param === "password" ? error.msg : '' %>
+                                </div>
+                                <% }) %>
+                            <% } %>
+                        </div>
+                        <!-- Input confirm password with validation -->
+                        <div id="show_hide_confirm_password" class="mb-3">
+                            <label for="confirmpassword" class="col-form-label">Confirm Password <i class="bi bi-info-circle opacity-75" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Confirm password and password needs to be the same" style="font-size: 13px;"></i></label>
+                            <button type="button" class="pass-mask">
+                                <i class="bi bi-eye-slash-fill opacity-50" aria-hidden="true"></i>
+                            </button>
+                            <input type="password" class="form-control
+                            <% if(err != 'undefined') { %>
+                                <% err.forEach((error) => { %>
+                                    <%= error.param === "confirmpassword" ? 'is-invalid' : '' %>
+                                <% }) %>
+                            <% } %>
+                            "
+                            name="confirmpassword" id="confirmpassword" placeholder="Confirm Password" />
+                            <% if(err != 'undefined') { %>
+                                <% err.forEach((error) => { %>
+                                <div id="validationConfirmPasswordServer" class="invalid-feedback">
+                                    <%= error.param === "confirmpassword" ? error.msg : '' %>
+                                </div>
+                                <% }) %>
+                            <% } %>
+                        </div>
+                    </div>
+                    <!-- Submit form -->
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-primary">
+                            Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <!-- Anchor to return back to contact page -->
+        </div>
+    </div>
+</main>

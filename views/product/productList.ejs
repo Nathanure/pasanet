@@ -1,0 +1,247 @@
+<%- contentFor('content') %>
+<main>
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">Dashboard</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="text-capitalize breadcrumb-item">
+                <a class="text-decoration-none" href="/"
+                    ><%= superadmin.role || admin.role %> Dashboard</a
+                >
+            </li>
+            <li class="text-capitalize breadcrumb-item active">Product list</li>
+        </ol>
+        <% const head = ['No.', 'ID', 'Name', 'Type', 'Stock', 'Unit', 'Price', 'Created on', 'Last updated', 'Updated by']%>
+        <!-- Display for superadmin and admin -->
+        <div class="card mb-4">
+            <div
+                class="card-header d-flex justify-content-between align-items-center"
+            >
+                <span>
+                    <i class="fas fa-table me-1"></i>
+                    Product list
+                </span>
+                <% if (superadmin !== undefined && admin.length === 0) { %>
+                <button
+                    class="btn btn-sm btn-success rounded"
+                    data-bs-toggle="modal"
+                    data-bs-target="#addProduct"
+                >
+                    Add Product
+                </button>
+                <% } %>
+            </div>
+            <div class="card-body">
+                <table
+                    class="table table-hover table-bordered <%= product.length < 1 ? 'm-0' : '' %>"
+                    id="generalData"
+                >
+                    <thead>
+                        <tr>
+                            <% head.forEach(column => { %>
+                            <th><%= column %></th>
+                            <% }) %>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% product.forEach((row, i) => { %>
+                        <tr
+                            role="button"
+                            onclick="window.location='<%= row.product_id %>';"
+                        >
+                            <th><%= i+1 %></th>
+                            <td><%= row.product_id %></td>
+                            <td><%= row.name %></td>
+                            <td><%= row.type %></td>
+                            <td><%= row.stock %></td>
+                            <td><%= row.unit %></td>
+                            <td><%= row.price %></td>
+                            <td><%= row.created_at%></td>
+                            <td><%= row.last_updated === null ? '-' : row.last_updated %></td>
+                            <td><%= row.updated_by === null ? '-' : row.updated_by %>
+                            </td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Modal to add product -->
+    <% if (superadmin !== undefined && admin.length === 0) { %>
+    <div
+        class="modal fade"
+        id="addProduct"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="addProductLabel"
+        aria-hidden="true"
+    >
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form action="/product/" method="post" enctype="multipart/form-data">
+                    <!-- Modal header -->
+                    <div class="modal-header">
+                        <!-- Modal title -->
+                        <h1 class="modal-title fs-5" id="addProductLabel">
+                            Add Product
+                        </h1>
+                        <!-- Close button -->
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        ></button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <!-- Input product name -->
+                        <div class="mb-3">
+                            <div class="input-container
+                            <% if(errModal.length > 0) { %>
+                                <% errModal.forEach((error) => { %>
+                                    <%= error.param === "name" ? 'is-invalid' : '' %>
+                                <% }) %>
+                            <% } %>">
+                                <label for="name">Product name</label>
+                                <input type="text" name="name" input-placeholder="Insert new product" />
+                            </div>
+                            <% if(errModal.length > 0) { %>
+                                <% errModal.forEach((error) => { %>
+                                    <% if(error.param === "name") { %>
+                                        <div id="validationNameServer" class="invalid-feedback"> 
+                                            <%= error.msg %>
+                                        </div>
+                                    <% } %>
+                                <% }) %>
+                            <% } %>
+                        </div>
+                        <!-- Input/select product type -->
+                        <div class="mb-3">
+                            <div class="input-container
+                            <% if(errModal.length > 0) { %>
+                                <% errModal.forEach((error) => { %>
+                                    <%= error.param === "type" ? 'is-invalid' : '' %>
+                                <% }) %>
+                            <% } %>">
+                                <label for="type">Product type</label>
+                                <input type="text" list="types" id="type" name="type" autocomplete="off" input-placeholder="Product type" />
+                                <datalist id="types">
+                                    <% type.forEach(element => { %>
+                                    <option value="<%= element.type %>"></option>
+                                    <% }) %>
+                                </datalist>
+                            </div>
+                            <% if(errModal.length > 0) { %>
+                                <% errModal.forEach((error) => { %>
+                                    <% if(error.param === "type") { %>
+                                        <div id="validationTypeServer" class="invalid-feedback"> 
+                                            <%= error.msg %>
+                                        </div>
+                                    <% } %>
+                                <% }) %>
+                            <% } %>
+                        </div>
+                        <!-- Input only integer product stock -->
+                        <div class="mb-3">
+                            <div class="input-container
+                            <% if(errModal.length > 0) { %>
+                                <% errModal.forEach((error) => { %>
+                                    <%= error.param === "stock" ? 'is-invalid' : '' %>
+                                <% }) %>
+                            <% } %>">
+                                <label for="stock">Product stock</label>
+                                <input type="number" id="stock" name="stock" input-placeholder="Input a number" />
+                            </div>
+                            <% if(errModal.length > 0) { %>
+                                <% errModal.forEach((error) => { %>
+                                    <% if(error.param === "stock") { %>
+                                        <div id="validationStockServer" class="invalid-feedback"> 
+                                            <%= error.msg %>
+                                        </div>
+                                    <% } %>
+                                <% }) %>
+                            <% } %>
+                        </div>
+                        <!-- Input/select product unit -->
+                        <div class="mb-3">
+                            <div class="input-container
+                            <% if(errModal.length > 0) { %>
+                                <% errModal.forEach((error) => { %>
+                                    <%= error.param === "unit" ? 'is-invalid' : '' %>
+                                <% }) %>
+                            <% } %>">
+                                <label for="unit">Product unit</label>
+                                <input type="text" list="units" id="unit" name="unit" autocomplete="off" input-placeholder="Product type" />
+                                <datalist id="units">
+                                    <% unit.forEach(element => { %>
+                                    <option value="<%= element.unit %>"></option>
+                                    <% }) %>
+                                </datalist>
+                            </div>
+                            <% if(errModal.length > 0) { %>
+                                <% errModal.forEach((error) => { %>
+                                    <% if(error.param === "unit") { %>
+                                        <div id="validationUnitServer" class="invalid-feedback"> 
+                                            <%= error.msg %>
+                                        </div>
+                                    <% } %>
+                                <% }) %>
+                            <% } %>
+                        </div>
+                        <!-- Input only product price -->
+                        <div class="mb-3">
+                            <div class="input-container
+                            <% if(errModal.length > 0) { %>
+                                <% errModal.forEach((error) => { %>
+                                    <%= error.param === "price" ? 'is-invalid' : '' %>
+                                <% }) %>
+                            <% } %>">
+                                <label for="price">Product price</label>
+                                <input type="text" id="price" name="price" input-placeholder="Put 'Rp' as symbol of currency" />
+                            </div>
+                            <% if(errModal.length > 0) { %>
+                                <% errModal.forEach((error) => { %>
+                                    <% if(error.param === "price") { %>
+                                        <div id="validationPriceServer" class="invalid-feedback"> 
+                                            <%= error.msg %>
+                                        </div>
+                                    <% } %>
+                                <% }) %>
+                            <% } %>
+                        </div>
+                        <!-- Input only file product picture -->
+                        <div>
+                            <div class="input-container
+                            <% if(errModal.length > 0) { %>
+                                <% errModal.forEach((error) => { %>
+                                    <%= error.param === "image" ? 'is-invalid' : '' %>
+                                <% }) %>
+                            <% } %>">
+                                <label for="image">Product image</label>
+                                <input type="file" accept="image/*" id="image" name="image" input-placeholder="Product image" />
+                            </div>
+                            <% if(errModal.length > 0) { %>
+                                <% errModal.forEach((error) => { %>
+                                    <% if(error.param === "image") { %>
+                                        <div id="validationImageServer" class="invalid-feedback"> 
+                                            <%= error.msg %>
+                                        </div>
+                                    <% } %>
+                                <% }) %>
+                            <% } %>
+                        </div>
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">
+                            Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <% } %>
+</main>

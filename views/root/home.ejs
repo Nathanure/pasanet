@@ -1,0 +1,65 @@
+<%- contentFor('content') %>
+<!-- Main Page -->
+<main>
+    <div class="bg-dark py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">Pasanet</h1>
+                <p class="lead fw-normal text-white-50 mb-0">
+                    Pasar on the net
+                </p>
+                <% if (user.length !== 0) { %>
+                <p class="lead fw-normal text-white mt-3 mb-0">
+                    Welcome back, <%= user.username %>
+                </p>
+                <% } %>
+            </div>
+        </div>
+    </div>
+    <section class="py-4">
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                <% product.forEach(item => { %>
+                    <div class="col mb-5">
+                        <div class="card h-100">
+                            <!-- Product image-->
+                            <img
+                                class="card-img-top border-bottom image-item"
+                                src="img/products/<%= item.image_path %>"
+                                alt="<%= item.image_name %>"
+                            />
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 id="name" class="fw-bolder"><%= item.name %></h5>
+                                    <!-- Product price-->
+                                    <span id="price"><%= item.price %></span>
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer <%= user.length !== 0 ? 'p-2' : 'p-4' %> pt-0 border-top-0 bg-transparent">
+                                <% if (user.length !== 0) { %>
+                                <div class="d-flex justify-content-between">
+                                    <div class="btn-group" role="group" aria-label="Input increment and decrement">
+                                        <button id="minus-btn-<%= item.product_id %>" class="col-7 btn btn-outline-danger minus-btn" type="button">-</button>
+                                        <input id="item-<%= item.product_id %>" class="col-7 btn form-control text-center" type="text" value="0" disabled>
+                                        <button id="plus-btn-<%= item.product_id %>" class="col-7 btn btn-outline-success plus-btn" type="button">+</button>
+                                    </div>
+                                    <button id="put-btn" class="btn btn-outline-dark flex-shrink-0" type="button">
+                                        <i class="bi-cart-fill"></i>
+                                    </button>
+                                </div>
+                                <% } else { %>
+                                <div class="text-center">
+                                    <a class="btn btn-outline-dark mt-auto stretched-link" href="/item/<%= item.product_id %>">View options</a>
+                                </div>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </section>
+</main>

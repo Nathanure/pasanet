@@ -1,0 +1,50 @@
+<%- contentFor('content') %>
+<main>
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">Dashboard</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="text-capitalize breadcrumb-item active">
+                <%= superadmin.role || admin.role %> Dashboard
+            </li>
+        </ol>
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-table me-1"></i>
+                Data Log
+            </div>
+            <div class="card-body">
+                <table
+                    class="table table-bordered <%= log.length < 1 ? 'm-0' : '' %>"
+                    id="generalData"
+                >
+                    <thead>
+                        <tr>
+                            <% const fieldLog = ['No.', 'Username', 'Role', 'Time', 'Method', 'Path', 'Status code', 'New content length', 'Response time', 'URL before path', 'IP Address'] %>
+                            <% fieldLog.forEach(column => { %>
+                            <th><%= column %></th>
+                            <% }) %>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% log.forEach((row, i) => { %>
+                        <tr>
+                            <th><%= i+1 %></th>
+                            <td><%= row.username %></td>
+                            <td><%= row.role %></td>
+                            <td><%= row.time %></td>
+                            <td><%= row.method %></td>
+                            <td><%= row.path %></td>
+                            <td><%= row.status_code %></td>
+                            <td><%= row.length_newcontent %></td>
+                            <td><%= row.res_time %></td>
+                            <td><%= row.origin %></td>
+                            <td><%= row.remote_address %></td>
+                            </td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>

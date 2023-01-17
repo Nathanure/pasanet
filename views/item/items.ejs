@@ -1,0 +1,55 @@
+<%- contentFor('content') %>
+<!-- Item section-->
+<main class="py-4">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="mb-5 text-center">
+            <h1 class="fw-bolder">Pasanet</h1>
+            <p class="lead fw-normal text-black-50 mb-0">
+                Item List
+            </p>
+        </div>
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            <% product.forEach(item => { %>
+                <div class="col mb-5">
+                    <div class="card h-100">
+                        <!-- Product image-->
+                        <img
+                            class="card-img-top border-bottom image-item"
+                            src="img/products/<%= item.image_path %>"
+                            alt="<%= item.image_name %>"
+                        />
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 id="name" class="fw-bolder"><%= item.name %></h5>
+                                <!-- Product price-->
+                                <span id="price"><%= item.price %></span>
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer <%= user.length !== 0 ? 'p-2' : 'p-4' %> pt-0 border-top-0 bg-transparent">
+                            <% if (user.length !== 0) { %>
+                            <div class="d-flex justify-content-between">
+                                <div class="btn-group" role="group" aria-label="Input increment and decrement">
+                                    <button class="col-7 btn btn-outline-danger minus-btn" type="button">-</button>
+                                    <input class="col-7 btn form-control text-center" type="text" id="item" value="0" disabled>
+                                    <button class="col-7 btn btn-outline-success plus-btn" type="button">+</button>
+                                </div>
+                                <!-- <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" /> -->
+                                <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                                    <i class="bi-cart-fill"></i>
+                                </button>
+                            </div>
+                            <% } else { %>
+                            <div class="text-center">
+                                <a class="btn btn-outline-dark mt-auto stretched-link" href="/item/<%= item.product_id %>">View options</a>
+                            </div>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+</main>

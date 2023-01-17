@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('components/head') %> 
+    <body class="sb-nav-fixed">
+        <%- include('components/dashboard/nav') %> 
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav">
+                <%- include('components/dashboard/sideNav') %> 
+            </div>
+            <div id="layoutSidenav_content">
+                <%- content %> 
+                <%- include('components/dashboard/footer') %> 
+            </div>
+        </div>
+    </body>
+    <%- include('components/script') %> 
+</html>

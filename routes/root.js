@@ -6,18 +6,21 @@ const router = express.Router();
 const upload = multer({dest: './public/img/uploads/'})
 // Local module
 const root = require('../controllers/rootController')
-const logout = require('../controllers/authController')
+const auth = require('../controllers/authController')
+const valid = require('../middleware/productListValidation')
 
 // Router to render and switch directories in URL
 // Index/home route
 router.route('/')
     // All role can see
     .get(root.root)
-    .post(root.rootPost)
+    // Only superadmin can post from root
+    .post(upload.single('image'), valid.insertProduct(), root.rootPost)
     // Only user can put from root
     .put(root.rootPut)
 
+// Logout route
 router.route('/logout')
-    .get(logout.deleteSession)
+    .get(auth.deleteSession)
     
 module.exports = router

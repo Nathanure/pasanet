@@ -63,77 +63,143 @@ window.addEventListener('DOMContentLoaded', event => {
     }
 });
 
-// Input increment and decrement
-document.addEventListener("DOMContentLoaded", function() {
-    function addEvents() {
-        const product = JSON.parse(window.productData);
-        product.forEach(function(item) {
-            const minusBtn = document.getElementById(`minus-btn-${item.product_id}`);
-            const plusBtn = document.getElementById(`plus-btn-${item.product_id}`);
-            const input = document.getElementById(`item-${item.product_id}`);
-            minusBtn.addEventListener("click", function() {
-                input.value = Math.max(parseInt(input.value) - 1, 0);
-            });
-            plusBtn.addEventListener("click", function() {
-                input.value = Math.min(parseInt(input.value) + 1, 100);
-            });
+// Input in card
+function addEvents() {
+    // Find all cards on the page
+    const cards = document.querySelectorAll('.card');
+
+    // Loop through each card
+    cards.forEach(card => {
+        // Find the plus and minus buttons for this card
+        const minusBtn = card.querySelector('.minus-btn');
+        const plusBtn = card.querySelector('.plus-btn');
+        const input = card.querySelector('.quantity');
+        const putBtn = card.querySelector('.put-btn');
+        const alert = card.querySelector('.alert-btn')
+        const alertMessage = card.querySelector('.alert-message');
+        // Object datas
+        const user_id = card.querySelector('.id-user');
+        const product_id = card.querySelector('.id');
+        const name = card.querySelector('.name');
+        const price = card.querySelector('.price');
+
+        // Add a click event listener to the minus button
+        minusBtn.addEventListener("click", function () {
+            // Decrement the quantity
+            if (input.value > 0) input.value--;
         });
-    }
-    addEvents();
-});
 
-// const minusBtn = document.querySelector('.minus-btn');
-// const plusBtn = document.querySelector('.plus-btn');
-// const putBtn = document.getElementById('put-btn');
+        // Add a click event listener to the plus button
+        plusBtn.addEventListener("click", function () {
+            // Increment the quantity
+            if (input.value < 99) input.value++;
+        });
 
-// minusBtn.addEventListener('click', decrementValue);
-// plusBtn.addEventListener('click', incrementValue);
-// putBtn.addEventListener('click', sendData);
-// var value = parseInt(document.getElementById('item').value, 10);
 
-// function decrementValue() {
-//     value = isNaN(value) ? 0 : value;
-//     value < 1 ? value = 1 : '';
-//     value--;
-//     document.getElementById('item').value = value;
-// }
+        if (alert) {
+            let flag = false;
+            alert.addEventListener("click", function () {
+                if (flag) {
+                    return;
+                }
+                flag = true;
+                const message = 'You need to login first!';
+                const type = 'danger';
+    
+                // Create the alert message
+                const wrapper = document.createElement('div');
+                wrapper.innerHTML = [
+                    `<div class="d-flex align-items-center px-3 justify-content-between alert alert-${type} alert-dismissible alert-message-buffer fixed-top mx-auto m-5 w-50" role="alert">`,
+                    '    <div class="d-flex align-items-center gap-3 ms-2">',
+                    '        <div class="loading">',
+                    '            <div class="spinner-border text-primary" role="status">',
+                    '                <span class="sr-only">Loading...</span>',
+                    '            </div>',
+                    '        </div>',
+                    '        <div class="d-grid">',
+                    `            ${message}`,
+                    '            <div class="small">Redirecting you to login...</div>',
+                    '        </div>',
+                    '    </div>',
+                    '    <button type="button" class="position-relative btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+                    '</div>'
+                ].join('');
+    
+                alertMessage.append(wrapper);
+                alertMessage.classList.add('alert-message-buffer');
 
-// function incrementValue() {
-//     value = isNaN(value) ? 0 : value;
-//     if (value >= 100) {
-//         value = 99;
-//     } else if (value < 100) {
-//         value++;
-//     }
-//     document.getElementById('item').value = value;
-// }
-
-function sendData() {
-    if (value > 0) {
-        let price = document.getElementById('price').innerText;
-        let data = {
-            name: document.getElementById('name').innerText,
-            sold: document.getElementById('item').value,
-            price: price.replace('.', '')
+                setTimeout(() => {
+                    wrapper.remove();
+                    flag = false;
+                    window.location='/login';
+                }, 4000);
+            })
         }
-        console.log(data);
-        var json = JSON.stringify(data);
-        var xhr = new XMLHttpRequest();
-        xhr.open('PUT', '/', true);
-        xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-        xhr.onload = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                console.log(xhr.responseText);
-            } else {
-                console.error(xhr.responseText);
-            }
-        };
-        xhr.send(json);
-    }
+
+        if (putBtn) {
+            // Add a click event listener to the put button
+            putBtn.addEventListener("click", function () {
+                // Pass data to server
+                let json = JSON.stringify({
+                    user_id: user_id.innerText,
+                    product_id: product_id.innerText,
+                    name: name.innerText,
+                    quantity: Number(input.value),
+                    price: Number(price.innerText.substring(2))
+                })
+                const xhr = new XMLHttpRequest();
+                xhr.open('PUT', '/');
+                xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+                xhr.send(json);
+            });
+        }
+    });
 }
 
-// Number only with text input
-document.getElementById("stock").addEventListener("input", function () {
-    // RegExp for number between 0-9 only
-    this.value = this.value.replace(/[^0-9]/g, '');
+document.addEventListener("DOMContentLoaded", addEvents);
+
+const stock = document.getElementById("stock");
+if (stock) {
+    // Number only with text input
+    stock.addEventListener("input", function () {
+        // RegExp for number between 0-9 only
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+}
+
+const imageCarousel = document.getElementById("image");
+if (imageCarousel) {
+    imageCarousel.addEventListener("click", function() {
+        this.classList.toggle("blurred");
+    });
+}
+
+// Variable for all .input-container
+const floatContainer = document.querySelectorAll('.input-container');
+
+// Iteration for every containered input with the class 'input-container'
+floatContainer.forEach(element => {
+    // Display for value if input already has it
+    if (element.querySelector('input').value) {
+        element.classList.add('active');
+    }
+    const handleFocus = (e) => {
+        const target = e.target;
+        // Add .active in the container and placeholder attribute in input tag
+        target.parentNode.classList.add('active');
+        target.setAttribute('placeholder', target.getAttribute('input-placeholder'));
+    }
+    const handleBlur = (e) => {
+        const target = e.target;
+        // Remove .active if it doesn't have any value inside it and placeholder attribute in input tag
+        if(!target.value) {
+            target.parentNode.classList.remove('active');
+        }
+        target.removeAttribute('placeholder')
+    }
+    // Variable for input that's in the container
+    const floatInput = element.querySelector('input');
+    // EventListener for every time input is focus and blur
+    floatInput.addEventListener('focus', handleFocus)
+    floatInput.addEventListener('blur', handleBlur)
 });

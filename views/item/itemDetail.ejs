@@ -2,23 +2,31 @@
 <!-- Item detail section-->
 <main class="py-5">
     <div class="container px-4 px-lg-5 my-5">
-        <div class="row gx-4 gx-lg-5 align-items-center">
-            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0 image-item-detail" src="img/products/<%= item.image_path %>" alt="<%= item.image_name %>" /></div>
+        <div class="card flex-row border-0 row gx-4 gx-lg-5 align-items-center">
+            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0 image-item-detail" src="img/products/<%= product.image_path %>" alt="<%= product.image_name %>" /></div>
             <div class="col-md-6">
-                <h1 id="name" class="display-5 fw-bolder"><%= item.name %></h1>
+                <% if (user.length !== 0) { %>
+                <div class="id-user d-none"><%= user.account_id %></div>
+                <div class="id d-none"><%= item.product_id %></div>
+                <% } %>
+                <!-- Anchors to return back to item page -->
+                <a href="/item" class="d-inline-block fs-5 text-decoration-none link-secondary mb-3">
+                    <i class="bi bi-arrow-bar-left me-1"></i>Back to Item List
+                </a>
+                <h1 class="<%= user.length !== 0 ? 'name' : '' %> display-5 fw-bolder"><%= product.name %></h1>
                 <div class="fs-5 mb-5">
-                    <span id="price"><%= item.price %></span>
+                    <span class="<%= user.length !== 0 ? 'price' : '' %>">Rp<%= product.price %></span>
                 </div>
-                <p class="lead">Hmm.. nice <%= item.name %></p>
+                <p class="lead">Hmm.. nice <span class="text-lowercase"><%= product.name %></span></p>
+                <div class="alert-message fixed-top"></div>
                 <div class="d-flex justify-content-between">
                     <div class="btn-group" role="group" aria-label="Input increment and decrement">
                         <button class="col-7 btn btn-outline-danger minus-btn" type="button">-</button>
-                        <input class="col-7 btn form-control text-center" type="text" id="item" value="0" disabled>
+                        <input class="col-7 btn form-control text-center quantity" type="text" value="0" disabled>
                         <button class="col-7 btn btn-outline-success plus-btn" type="button">+</button>
                     </div>
-                    <button class="btn btn-outline-dark flex-shrink-0" type="button">
-                        <i class="bi-cart-fill me-1"></i>
-                        Add to cart
+                    <button class="<%= user.length !== 0 ? 'put-btn' : 'alert-btn' %> btn btn-outline-dark flex-shrink-0" type="button">
+                        <i class="bi bi-cart-plus"></i>
                     </button>
                 </div>
             </div>

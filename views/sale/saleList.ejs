@@ -1,0 +1,64 @@
+<%- contentFor('content') %>
+<main>
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">Dashboard</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="text-capitalize breadcrumb-item">
+                <a class="text-decoration-none" href="/"
+                    ><%= superadmin.role || admin.role %> Dashboard</a
+                >
+            </li>
+            <li class="text-capitalize breadcrumb-item active">Selling list</li>
+        </ol>
+        <% const head = ['No.', 'ID', 'Username', 'Date', 'Method', 'Bought products', 'Total cost']%>
+        <!-- Display for superadmin and admin -->
+        <div class="card mb-4">
+            <div
+                class="card-header d-flex justify-content-between align-items-center"
+            >
+                <span>
+                    <i class="fas fa-table me-1"></i>
+                    Selling list
+                </span>
+            </div>
+            <div class="card-body">
+                <table
+                    class="table table-hover table-bordered <%= sales.length < 1 ? 'm-0' : '' %>"
+                    id="generalData"
+                >
+                    <thead>
+                        <tr>
+                            <% head.forEach(column => { %>
+                            <th><%= column %></th>
+                            <% }) %>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% sales.forEach((row, i) => { %>
+                        <tr
+                            role="button"
+                            onclick="window.location='<%= row.product_id %>';"
+                        >
+                            <th><%= i+1 %></th>
+                            <td><%= row.sales_id %></td>
+                            <td><%= row.username %></td>
+                            <td><%= row.date %></td>
+                            <td><%= row.method %></td>
+                            <td>
+                                <% JSON.parse(row.products).forEach(product => { %>
+                                <ul id="product">ID: <%= product.product_id %> 
+                                    <li>Name: <%= product.name %></li> 
+                                    <li>Quantities: <%= product.quantity %></li> 
+                                </ul>
+                                <% }) %>
+                            </td>
+                            <td><%= row.cost %></td>
+                            </td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>

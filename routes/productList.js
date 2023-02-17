@@ -5,7 +5,7 @@ const multer = require('multer')
 const router = express.Router();
 const upload = multer({dest: './public/img/uploads/'})
 // Local module
-const valid = require('../controllers/productListValidation')
+const valid = require('../middleware/productListValidation')
 const product = require('../controllers/productListController')
 
 // Router to render and switch directories in URL

@@ -1,12 +1,12 @@
 // Import built-in middleware
 const fs = require('fs');
 
-const createFile = () => {
-    // Make a directory and JSON file if it hasn't been made yet
-    if (!fs.existsSync('./model')) fs.mkdirSync('./model');
-    if (!fs.existsSync('./model/checkout.json')) fs.writeFileSync('./model/checkout.json', '', 'utf-8');
-    // Picture directory
+// Initialized in server.js
+// Make a directory if it hasn't been made yet
+const checkDir = () => {
+    if (!fs.existsSync('./model/')) fs.mkdirSync('./model/');
+    if (!fs.existsSync('./model/checkout.json')) fs.writeFileSync('./model/checkout.json', '[]', 'utf-8');
     if (!fs.existsSync('./public/img/products/')) fs.mkdirSync('./public/img/products/');
-}
+} 
 
-module.exports = createFile;
+module.exports = checkDir;

@@ -1,0 +1,56 @@
+<%- contentFor('content') %>  
+<!-- Login -->
+<main>
+    <!-- Display page flexible -->
+    <div class="d-flex justify-content-center vh-100 bg-credential">
+        <!-- Center display -->
+        <div class="m-auto">
+            <!-- Card to contain it -->
+            <div class="card shadow-lg">
+                <h1 class="text-center mb-3 mt-5 fs-2">Reset Password
+                    <!-- Return to login page -->
+                    <button type="button" class="btn-close position-absolute fs-5" style="left: 90%; bottom: 92%;" aria-label="Close" onclick="window.location='/login'"></button>
+                </h1>
+                <!-- Form update -->
+                <form class="p-3" action="/reset-password" method="post">
+                    <!-- Input form -->
+                    <div style="min-width: 30vw; max-width: 30vw;">
+                        <!-- Input email with validation -->
+                        <div class="mb-2">
+                            <label for="email" class="col-form-label">Email<i class="bi bi-info-circle opacity-75 ms-1" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Enter your email, so we can email a link for you." style="font-size: 13px;"></i></label>
+                            <input type="text" class="form-control
+                            <% if(err != 'undefined') { %>
+                                <% err.forEach((error) => { %>
+                                    <%= error.param === "email" ? 'is-invalid' : '' %>
+                                <% }) %>
+                            <% } %>
+                            " 
+                            id="email" name="email" placeholder="Insert valid email" />
+                            <% if(err != 'undefined') { %>
+                                <% err.forEach((error) => { %>
+                                <div id="validationEmailServer" class="invalid-feedback"> 
+                                    <%= error.param === "email" ? error.msg : '' %>
+                                </div>
+                                <% }) %>
+                            <% } %>
+                        </div>
+                    </div>
+                    <!-- Email sent succesful -->
+                    <!-- <%# if (successMessage.length > 0) { %>
+                    <div class="d-inline-block alert alert-success m-0 mt-3 px-2 py-1" role="alert">
+                        <i class="bi bi-check-circle-fill me-2"></i><%#= successMessage %> 
+                    </div>
+                    <%# } else if (errorMessage.length > 0) { %>
+                    <div class="d-inline-block alert alert-danger m-0 mt-3 px-2 py-1" role="alert">
+                        <i class="bi bi-exclamation-circle me-2"></i><%#= errorMessage %> 
+                    </div>
+                    <%# } %>  -->
+                    <!-- Submit form -->
+                    <button type="submit" class="btn btn-primary mt-3 float-end">
+                        Submit
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>

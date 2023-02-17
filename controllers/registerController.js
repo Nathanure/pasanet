@@ -1,5 +1,5 @@
 // Local modules
-const pool = require('../middleware/db')
+const pool = require('../config/db')
 const { validationResult } = require('express-validator')
 
 // CRUD Functions
@@ -22,7 +22,7 @@ const insertAccount = async (req, res) => {
     try {
         let errors = validationResult(req).array({onlyFirstError: true});
         if (errors < 1) {
-            const { rows : [add] } = await pool.query(`INSERT INTO accounts (email, username, password, created_at) VALUES ('${req.body.email}', '${req.body.username}', crypt('${req.body.password}', gen_salt('bf', 10)), '${moment().local()}') RETURNING *`);
+            const { rows : [add] } = await pool.query(`INSERT INTO accounts (email, username, password, created_at) VALUES ('${req.body.email}', '${req.body.username}', crypt('${req.body.password}', gen_salt('bf', 10)), '${new Date().toISOString()}') RETURNING *`);
             // Session for success message in login
             req.session.adduser = add
             res.redirect('/login')

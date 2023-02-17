@@ -1,5 +1,5 @@
 // Middleware
-const pool = require('../middleware/db')
+const pool = require('../config/db')
 
 // CRUD Functions
 const displayAll = async (req, res) => {

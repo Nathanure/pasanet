@@ -56,17 +56,22 @@
                         <!-- Input password with validation -->
                         <div id="show_hide_password" class="mb-3">
                             <label for="password" class="col-form-label">Password <i class="bi bi-info-circle opacity-75" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Enter password with combination of at least a lower case, upper case, number, and special character with more than 8 characters. Example: (Abcde12!)" style="font-size: 13px;"></i></label>
-                            <button type="button" class="pass-mask">
-                                <i class="bi bi-eye-slash-fill opacity-50" aria-hidden="true"></i>
-                            </button>
-                            <input type="password" class="form-control
-                            <% if(err != 'undefined') { %>
-                                <% err.forEach((error) => { %>
-                                    <%= error.param === "password" ? 'is-invalid' : '' %>
-                                <% }) %>
-                            <% } %>
-                            "
-                            name="password" id="password" placeholder="Strong Password" />
+                            <div class="password-field">
+                                <button type="button">
+                                    <i
+                                        class="bi bi-eye-slash-fill opacity-50"
+                                        aria-hidden="true">
+                                    </i>
+                                </button>
+                                <input type="password" class="form-control
+                                <% if(err != 'undefined') { %>
+                                    <% err.forEach((error) => { %>
+                                        <%= error.param === "password" ? 'is-invalid' : '' %>
+                                    <% }) %>
+                                <% } %>
+                                "
+                                name="password" id="password" placeholder="Strong Password" />
+                            </div>
                             <% if(err != 'undefined') { %>
                                 <% err.forEach((error) => { %>
                                 <div id="validationPasswordServer" class="invalid-feedback">
@@ -78,17 +83,22 @@
                         <!-- Input confirm password with validation -->
                         <div id="show_hide_confirm_password" class="mb-3">
                             <label for="confirmpassword" class="col-form-label">Confirm Password <i class="bi bi-info-circle opacity-75" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Confirm password and password needs to be the same" style="font-size: 13px;"></i></label>
-                            <button type="button" class="pass-mask">
-                                <i class="bi bi-eye-slash-fill opacity-50" aria-hidden="true"></i>
-                            </button>
-                            <input type="password" class="form-control
-                            <% if(err != 'undefined') { %>
-                                <% err.forEach((error) => { %>
-                                    <%= error.param === "confirmpassword" ? 'is-invalid' : '' %>
-                                <% }) %>
-                            <% } %>
-                            "
-                            name="confirmpassword" id="confirmpassword" placeholder="Confirm Password" />
+                            <div class="password-field">
+                                <button type="button">
+                                    <i
+                                        class="bi bi-eye-slash-fill opacity-50"
+                                        aria-hidden="true">
+                                    </i>
+                                </button>
+                                <input type="password" class="form-control
+                                <% if(err != 'undefined') { %>
+                                    <% err.forEach((error) => { %>
+                                        <%= error.param === "password" ? 'is-invalid' : '' %>
+                                    <% }) %>
+                                <% } %>
+                                "
+                                name="confirmpassword" id="confirmpassword" placeholder="Confirm Password" />
+                            </div>
                             <% if(err != 'undefined') { %>
                                 <% err.forEach((error) => { %>
                                 <div id="validationConfirmPasswordServer" class="invalid-feedback">

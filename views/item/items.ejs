@@ -12,40 +12,46 @@
             <% product.forEach(item => { %>
                 <div class="col mb-5">
                     <div class="card h-100">
-                        <!-- Product image-->
-                        <img
-                            class="card-img-top border-bottom image-item"
-                            src="img/products/<%= item.image_path %>"
-                            alt="<%= item.image_name %>"
-                        />
-                        <!-- Product details-->
-                        <div class="card-body p-4">
-                            <div class="text-center">
-                                <!-- Product name-->
-                                <h5 id="name" class="fw-bolder"><%= item.name %></h5>
-                                <!-- Product price-->
-                                <span id="price"><%= item.price %></span>
+                        <% if (user.length !== 0) { %>
+                        <div class="id-user d-none"><%= user.account_id %></div>
+                        <div class="id d-none"><%= item.product_id %></div>
+                        <% } %>
+                        <a class="visibility-hidden text-decoration-none text-dark" href="/item/<%= item.product_id %>">
+                            <!-- Product image-->
+                            <img
+                                class="card-img-top border-bottom image-item"
+                                src="img/products/<%= item.image_path %>"
+                                alt="<%= item.image_name %>"
+                            />
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h5 class="<%= user.length !== 0 ? 'name' : '' %> fw-bolder"><%= item.name %></h5>
+                                    <!-- Product price-->
+                                    <span class="<%= user.length !== 0 ? 'price' : '' %>">Rp<%= item.price %></span>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                         <!-- Product actions-->
-                        <div class="card-footer <%= user.length !== 0 ? 'p-2' : 'p-4' %> pt-0 border-top-0 bg-transparent">
-                            <% if (user.length !== 0) { %>
+                        <div class="card-footer <%#= user.length !== 0 ? 'p-2' : 'p-4' %> p-2 pt-0 border-top-0 bg-transparent">
+                            <%# if (user.length !== 0) { %>
+                            <div class="alert-message fixed-top"></div>
                             <div class="d-flex justify-content-between">
                                 <div class="btn-group" role="group" aria-label="Input increment and decrement">
                                     <button class="col-7 btn btn-outline-danger minus-btn" type="button">-</button>
-                                    <input class="col-7 btn form-control text-center" type="text" id="item" value="0" disabled>
+                                    <input class="col-7 btn form-control text-center quantity" type="text" value="0" disabled>
                                     <button class="col-7 btn btn-outline-success plus-btn" type="button">+</button>
                                 </div>
-                                <!-- <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" /> -->
-                                <button class="btn btn-outline-dark flex-shrink-0" type="button">
-                                    <i class="bi-cart-fill"></i>
+                                <button class="<%= user.length !== 0 ? 'put-btn' : 'alert-btn' %> btn btn-outline-dark flex-shrink-0" type="button">
+                                    <i class="bi bi-cart-plus"></i>
                                 </button>
                             </div>
-                            <% } else { %>
-                            <div class="text-center">
-                                <a class="btn btn-outline-dark mt-auto stretched-link" href="/item/<%= item.product_id %>">View options</a>
-                            </div>
-                            <% } %>
+                            <%# } else { %>
+                            <!-- <div class="text-center">
+                                <a class="btn btn-outline-dark mt-auto stretched-link" href="/item/<%#= item.product_id %>">View options</a>
+                            </div> -->
+                            <%# } %>
                         </div>
                     </div>
                 </div>

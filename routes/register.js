@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 // Import local module
 const register = require('../controllers/registerController')
-const valid = require('../controllers/authValidation')
+const valid = require('../middleware/authValidation')
 
 // Router to render and switch directories in URL
 // Register route

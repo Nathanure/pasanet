@@ -37,29 +37,31 @@
                         <!-- Input password with validation -->
                         <div id="show_hide_password" class="mb-3">
                             <label for="password" class="col-form-label">Password <i class="bi bi-info-circle opacity-75" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Enter password with combination of at least a lower case, upper case, number, and special character with more than 8 characters. Example: (Abcde12!)" style="font-size: 13px;"></i></label>
-                            <button type="button" class="pass-mask">
-                                <i
-                                    class="bi bi-eye-slash-fill opacity-50"
-                                    aria-hidden="true">
-                                </i>
-                            </button>
-                            <input type="password" class="form-control
+                            <div class="password-field">
+                                <button type="button">
+                                    <i
+                                        class="bi bi-eye-slash-fill opacity-50"
+                                        aria-hidden="true">
+                                    </i>
+                                </button>
+                                <input type="password" class="form-control
+                                <% if(err != 'undefined') { %>
+                                    <% err.forEach((error) => { %>
+                                        <%= error.param === "password" ? 'is-invalid' : '' %>
+                                    <% }) %>
+                                <% } %>
+                                "
+                                name="password" id="password" placeholder="Strong Password" />
+                            </div>
                             <% if(err != 'undefined') { %>
                                 <% err.forEach((error) => { %>
-                                    <%= error.param === "password" ? 'is-invalid' : '' %>
-                                <% }) %>
-                            <% } %>
-                            "
-                            name="password" id="password" placeholder="Strong Password" />
-                            <% if(err != 'undefined') { %>
-                                <% err.forEach((error) => { %>
-                                <div id="validationPasswordServer" class="invalid-feedback position-absolute w-errpass">
+                                <div id="validationPasswordServer" class="d-inline-block position-absolute w-50 invalid-feedback">
                                     <%= error.param === "password" ? error.msg : '' %>
                                 </div>
                                 <% }) %>
                             <% } %>
-                            <!-- Forget column -->
-                            <a class="position-absolute text-decoration-none mt-1" style="left: 71.25%; font-size: .875rem" href="/reset">Forgot Password?</a>
+                            <!-- Reset password  -->
+                            <a class="d-flex small flex-grow-1 justify-content-end text-decoration-none mt-1" href="/reset-password">Forgot Password?</a>
                         </div>
                     </div>
                     <!-- Submit form -->
@@ -73,7 +75,7 @@
                             </button>
                         </div>
                     <% } else { %>
-                        <button type="submit" class="btn btn-primary mt-4 float-end">
+                        <button type="submit" class="btn btn-primary float-end">
                             Submit
                         </button>
                     <% } %>

@@ -1,5 +1,5 @@
 // Middleware
-const pool = require('../middleware/db')
+const pool = require('../config/db')
 const { validationResult } = require('express-validator')
 const fs = require('fs')
 const moment = require('moment')

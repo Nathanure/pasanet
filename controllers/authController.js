@@ -1,6 +1,6 @@
 // Third-party module
-const pool = require('../middleware/db')
 const { validationResult } = require('express-validator')
+const pool = require('../config/db')
 
 // CRUD Functions
 const displayLogin = (req, res) => {
@@ -42,12 +42,14 @@ const setNewSession = async (req, res) => {
             // Authenticated admin that's going to get a session
             if (foundAccount.role === 'admin') {
                 req.session.admin = foundAccount
+                // model.deleteModel(foundAccount.id_user)
                 delete req.session.adduser
                 res.redirect('/')
             }
             // Authenticated superadmin that's going to get a session
             if (foundAccount.role === 'superadmin') {
                 req.session.superadmin = foundAccount
+                // model.deleteModel(foundAccount.id_user)
                 delete req.session.adduser
                 res.redirect('/')
             }
@@ -78,6 +80,7 @@ const deleteSession = (req, res) => {
     // Delete user session
     } else if(req.session.user) {
         delete req.session.user
+        delete req.session.checkout
         res.redirect('/')
     // Delete nothing
     } else {

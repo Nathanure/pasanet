@@ -9,7 +9,7 @@ const cookieParser = require('cookie-parser')
 const morganConfig = require('./config/logger')
 const corsOptions = require('./config/cors')
 const sessionMain = require('./config/session')
-const createFile = require('./config/createFs')
+const checkDir = require('./config/createFs')
 
 // Variable for express
 const app = express()
@@ -21,7 +21,9 @@ app.set('view engine', 'ejs')
 
 // Basic setup using Express-ejs-layouts with Express JS
 app.use(expressLayouts)
-createFile()
+
+// Check directory when first start
+checkDir()
 
 // Cross Origin Resource Sharing
 app.use(logger(morganConfig)) // Middleware HTTP logger
@@ -36,23 +38,25 @@ app.use('/', express.static('public'))
 app.use('/account', express.static('public'))
 app.use('/product', express.static('public'))
 app.use('/item', express.static('public'))
+app.use('/reset-password', express.static('public'))
 
 // Middleware to render routes and switch directories in URL
 // Global Routes
 app.use('/', require('./routes/root'))
 app.use('/register', require('./routes/register'))
 app.use('/login', require('./routes/auth'))
+app.use('/reset-password', require('./routes/resetPassword'))
 // Superadmin Routes
 app.use('/log', require('./routes/log'))
 // Admin & Superadmin Routes
 app.use('/product', require('./routes/productList'))
 app.use('/account', require('./routes/accountList'))
-app.use('/sale', require('./routes/sellingList'))
+app.use('/sale', require('./routes/sale'))
 // Admin Routes
 // User Routes
 app.use('/item', require('./routes/item'))
-// app.use('/order', require('./routes/order'))
-// app.use('/checkout', require('./routes/checkout'))
+app.use('/cart', require('./routes/cart'))
+app.use('/checkout', require('./routes/checkout'))
 
 // 404 Not Found if page is not found
 app.all('*', (req, res) => {

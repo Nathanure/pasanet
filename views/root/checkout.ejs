@@ -1,0 +1,136 @@
+<%- contentFor('content') %>
+<!-- Checkout page -->
+<main>
+    <!-- Display page flexible -->
+    <div class="d-flex justify-content-center vh-100 bg-credential overflow-auto">
+        <!-- Card to contain it -->
+        <div class="container shadow bg-white my-auto">
+            <h1 class="text-center text-success fw-bold fs-2 mb-5 mt-4">Purchase Confirmation</h1>
+            <div class="d-grid gap-2">
+                <!-- Product -->
+                <div class="d-flex justify-content-between fw-bold align-items-center">
+                    <div class="text-start col-6">
+                        Product
+                    </div>
+                    <div class="text-end col-6">
+                        Pasanet
+                    </div>
+                </div>
+                <!-- Gap Border -->
+                <hr class="my-3">
+                <!-- Company -->
+                <div class="d-flex justify-content-between fw-light align-items-center">
+                    <div class="text-start col-6 small">
+                        Company
+                    </div>
+                    <div class="text-end col-6 small">
+                        North Kusuma St. 10 No. 169, RT.001/RW.016, Duren Jaya, East Bekasi, Bekasi City, West Java 17111
+                    </div>
+                </div>
+                <!-- Transaction number -->
+                <div class="d-flex justify-content-between fw-light align-items-center">
+                    <div class="text-start col-6 small">
+                        Transaction number
+                    </div>
+                    <div class="text-end col-6 small">
+                        <% if (sale.sales_id < 1000000000 && sale.sales_id >= 100000000) { %>
+                            <%= sale.sales_id %> 
+                        <% } else if (sale.sales_id < 100000000 && sale.sales_id >= 10000000) { %>
+                            <%= sale.sales_id = '0' + sale.sales_id %> 
+                        <% } else if (sale.sales_id < 10000000 && sale.sales_id >= 1000000) { %>
+                            <%= sale.sales_id = '00' + sale.sales_id %> 
+                        <% } else if (sale.sales_id < 1000000 && sale.sales_id >= 100000) { %>
+                            <%= sale.sales_id = '000' + sale.sales_id %> 
+                        <% } else if (sale.sales_id < 100000 && sale.sales_id >= 10000) { %>
+                            <%= sale.sales_id = '0000' + sale.sales_id %> 
+                        <% } else if (sale.sales_id < 10000 && sale.sales_id >= 1000) { %>
+                            <%= sale.sales_id = '00000' + sale.sales_id %> 
+                        <% } else if (sale.sales_id < 1000 && sale.sales_id >= 100) { %>
+                            <%= sale.sales_id = '000000' + sale.sales_id %> 
+                        <% } else if (sale.sales_id < 100 && sale.sales_id >= 10) { %>
+                            <%= sale.sales_id = '0000000' + sale.sales_id %> 
+                        <% } else { %>
+                            <%= sale.sales_id = '00000000' + sale.sales_id %> 
+                        <% } %> 
+                    </div>
+                </div>
+                <!-- Transaction number -->
+                <div class="d-flex justify-content-between fw-light align-items-center">
+                    <div class="text-start col-6 small">
+                        Transaction method
+                    </div>
+                    <div class="text-end col-6 small">
+                        <%= sale.method %>
+                    </div>
+                </div>
+                <!-- Transaction number -->
+                <div class="d-flex justify-content-between fw-light align-items-center">
+                    <div class="text-start col-6 small">
+                        Transaction date
+                    </div>
+                    <div class="text-end col-6 small">
+                        <%= sale.date %>
+                    </div>
+                </div>
+                <!-- User -->
+                <div class="d-flex justify-content-between fw-light align-items-center">
+                    <div class="text-start col-6 small">
+                        User
+                    </div>
+                    <div class="text-end col-6 small">
+                        <%= sale.user_id %>
+                    </div>
+                </div>
+                <!-- Purchase -->
+                <div class="d-grid fw-light">
+                    <div class="small">
+                        Purchase:
+                    </div>
+                    <% productBuy.forEach(item => { %>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="text-start col-5 small ms-3">
+                            <%= item.name %> (x<%= item.quantity %>)
+                        </div>
+                        <div class="text-end col-5 small">
+                            Rp<%= item.price * item.quantity %>.00
+                        </div>
+                    </div>
+                    <% }) %>
+                    <div class="d-flex justify-content-between">
+                        <hr class="col-4 mt-3 mb-2">
+                        <hr class="col-4 mt-3 mb-2">
+                    </div>
+                </div>
+                <!-- Subtotal -->
+                <div class="d-flex justify-content-between fw-light align-items-center">
+                    <div class="text-start col-6 small">
+                        Subtotal
+                    </div>
+                    <div class="text-end col-6 small">
+                        Rp<%= productBuy.map(product => product.price * product.quantity).reduce((acc, curr) => acc + curr) %>.00
+                    </div>
+                </div>
+                <!-- Gap Border -->
+                <hr class="my-3 border border-dark">
+                <!-- Total -->
+                <div class="d-flex justify-content-between fw-bold align-items-center">
+                    <div class="text-start col-6">
+                        Total
+                    </div>
+                    <div class="text-end col-6">
+                        Rp<%= productBuy.map(product => product.price * product.quantity).reduce((acc, curr) => acc + curr) %>.00
+                    </div>
+                </div>
+                <!-- Gratitude message -->
+                <div class="d-grid text-center opacity-75 my-4">Thank you for shopping in Pasanet!
+                    <div class="small">(Be sure to take a screenshot (<i class="bi bi-camera-fill"></i>) of this checkout before closing this page)</div>
+                </div>
+                <!-- Anchors to return back to item page -->
+                <a href="/" class="d-inline-block text-center link-primary mb-3">
+                    <i class="bi bi-arrow-bar-left me-1"></i>Back to Main Menu
+                </a>
+            </div>
+            <!-- Anchor to return back to home page -->
+        </div>
+    </div>
+</main>

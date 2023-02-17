@@ -1,5 +1,5 @@
 // Third-party module
-const pool = require('../middleware/db')
+const pool = require('../config/db')
 
 // CRUD Functions
 const displayLog = async (req, res) => {

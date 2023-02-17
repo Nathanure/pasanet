@@ -1,0 +1,98 @@
+<%- contentFor('content') %>
+<main>
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">Dashboard</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="text-capitalize breadcrumb-item">
+                <a class="text-decoration-none" href="/"
+                    ><%= superadmin.role || admin.role %> Dashboard</a
+                >
+            </li>
+            <li class="text-capitalize breadcrumb-item">
+                <a class="text-decoration-none" href="/product">Product list</a>
+            </li>
+            <li class="text-capitalize breadcrumb-item active">
+                <%= product.name %>
+            </li>
+        </ol>
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span>
+                    <i class="fas fa-table me-1"></i>
+                    Product detail
+                </span>
+                <% if (superadmin !== undefined && admin.length === 0) { %>
+                <!-- Button request POST update -->
+                <span class="d-flex gap-2">
+                    <button
+                        class="btn btn-sm btn-outline-success rounded"
+                        data-bs-toggle="modal"
+                        data-bs-target="#editImageSuperadmin"
+                    >
+                        Edit Image
+                    </button>
+                    <button
+                        class="btn btn-sm btn-success rounded"
+                        data-bs-toggle="modal"
+                        data-bs-target="#editProductSuperadmin"
+                    >
+                        Edit Product
+                    </button>
+                </span>
+                <% } else if (admin !== undefined && superadmin.length === 0) { %>
+                <button
+                    class="btn btn-sm btn-success rounded"
+                    data-bs-toggle="modal"
+                    data-bs-target="#editProductAdmin"
+                >
+                    Edit Product
+                </button>
+                <% } %>
+            </div>
+            <div class="d-flex">
+                <img
+                    class="image-detail"
+                    src="img/products/<%= product.image_path %>"
+                    alt="Product Picture"
+                />
+                <div class="card-body">
+                    <!-- d-flex to make the both of childs inline and flexible -->
+                    <div class="d-flex gap-3 mb-5">
+                        <!-- Left side -->
+                        <div class="d-grid gap-2 fw-bold">
+                            <% const field = ['Product ID', 'Product Name', 'Product Type', 'Product Stock', 'Product Unit', 'Product Price', 'Created on', 'Last Update', 'Updated by'] %>
+                            <% field.forEach(element => { %>
+                            <p class="my-0"><%= element %></p>
+                            <% }) %>
+                        </div>
+                        <!-- Right side -->
+                        <div class="d-grid gap-2">
+                            <p class="my-0">: <%= product.product_id %></p>
+                            <p class="my-0">: <%= product.name %></p>
+                            <p class="my-0">: <%= product.type %></p>
+                            <p class="my-0">: <%= product.stock %></p>
+                            <p class="my-0">: <%= product.unit %></p>
+                            <p class="my-0">: <%= product.price %></p>
+                            <p class="my-0">: <%= product.created_at %></p>
+                            <p class="my-0">: <%= product.last_updated === null ? '-' : product.last_updated %></p>
+                            <p class="my-0">: <%= product.updated_by === null ? '-' : product.updated_by %></p>
+                        </div>
+                    </div>
+                    <!-- Anchors link to other pages -->
+                    <div class="d-flex">
+                        <!-- Anchors to return back to contact page -->
+                        <a type="button" href="/product" class="btn btn-outline-secondary rounded">
+                            <i class="bi bi-arrow-bar-left me-1"></i>Back to Product List
+                        </a>
+                        <% if (superadmin !== undefined && admin.length === 0) { %>
+                            <!-- Button to trigger delete modal -->
+                            <button type="button" class="btn btn-danger rounded ms-auto" data-bs-toggle="modal" data-bs-target="#deleteProduct">
+                                Delete
+                            </button>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

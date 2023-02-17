@@ -1,0 +1,89 @@
+<%- contentFor('content') %>
+<!-- Item section-->
+<main class="py-4">
+    <% if (product.length === 0) { %>
+    <div class="vh-100 d-flex flex-column container px-4 px-lg-5 mt-5">
+        <div class="mb-5 text-center">
+            <h1 class="fw-bolder"><span class="text-capitalize"><%= user.username %></span>'s cart</h1>
+            <p class="lead fw-normal text-black-50 mb-0">
+                Ordered products
+            </p>
+        </div>
+        <!-- Display page, if there's no data in checkout -->
+        <div class="d-grid justify-content-center mt-5 mb-auto">
+            <p>No ordered products in cart</p>
+            <!-- Add Order -->
+            <a class="btn btn-success mb-5 text-decoration-none" href="/item">Add Order</a>
+        </div>
+    </div>
+    <% } else { %>
+    <!-- Display page, if there's data in checkout -->
+    <form action="/cart" method="post" class="container-fluid px-4 px-lg-5 mt-5">
+        <div class="mb-4">
+            <h1 class="fw-bolder"><span class="text-capitalize"><%= user.username %></span>'s cart</h1>
+            <div class="d-flex justify-content-between">
+                <p class="lead fw-normal text-black-50 mb-0">
+                    Ordered products
+                </p>
+                <div class="d-flex gap-2">
+                    <label class="align-self-center fs-4" for="method">Payment methods: </label>
+                    <select class="rounded px-1" name="method" id="method" required>
+                        <option value="" disabled selected>Please select an option</option>
+                        <option value="Pay directly">Pay directly</option>
+                    </select>
+                    <button type="submit" class="btn btn-success text-decoration-none">Pay</button>
+                </div>
+            </div>
+        </div>
+        <hr class="my-4 border-2">
+        <div class="d-flex flex-wrap justify-content-center justify-content-md-start">
+            <% product.forEach(item => { %>
+                <div class="col-12 col-sm-6 col-lg-4 p-2">
+                    <div class="card h-100">
+                        <!-- Product details-->
+                        <a class="id visibility-hidden text-decoration-none text-dark" href="/item/<%= item.product_id %>">
+                            <div class="card-body p-3">
+                                <!-- Product name -->
+                                <h5 class="name fw-bolder text-center mb-3"><%= item.name %></h5>
+                                <div class="d-flex justify-content-between">
+                                    <div class="d-grid gap-2">
+                                        <!-- Product quantity -->
+                                        <span class="fw-bold">Quantity</span>
+                                        <!-- Product price -->
+                                        <span class="fw-bold">Price</span>
+                                        <!-- Product total -->
+                                        <span class="fs-4 fw-bold">Total</span>
+                                    </div>
+                                    <div class="d-grid text-end gap-2">
+                                        <!-- Product quantity -->
+                                        <span class="quantity"><%= quantity = item.quantity %></span>
+                                        <!-- Product price -->
+                                        <span class="price">Rp<%= price = item.price %>.00</span>
+                                        <!-- Product total -->
+                                        <span class="fs-4 fw-bold">Rp<%= item.quantity * item.price %>.00</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <!-- Product actions-->
+                        <!-- <div class="card-footer p-3 border-top-0 bg-transparent">
+                            <div class="d-flex justify-content-end">
+                                <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                                    <i class="bi-cart-fill"></i>
+                                </button>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+        <hr class="my-4 border-2">
+        <div class="text-end fs-4 fw-bold">
+            Total Payment: Rp<%= total = product.map(product => product.price * product.quantity).reduce((acc, curr) => acc + curr) %>.00
+        </div>
+        <input type="text" name="user_id" id="user_id" value="<%= user.account_id %>" hidden>
+        <input type="text" name="product" id="product" value="<%= productString %>" hidden>
+        <input type="text" name="total" id="total" value="<%= total %>.00" hidden>
+    </form>
+    <% } %>
+</main>

@@ -1,5 +1,5 @@
 // Import local module
-const pool = require('../middleware/db')
+const pool = require('./db')
 const chalk = require('chalk')
 
 // Morgan Config
